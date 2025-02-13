@@ -1,0 +1,7 @@
+1 - Use the API to return a users info
+2 - Dump the user info into a .JSON file
+3 - Pretty-Print the .JSON file 
+4 - Set up a Scrapy project
+5 - Maybe i wont need a Scrapy project
+6 - Set up a django project
+
