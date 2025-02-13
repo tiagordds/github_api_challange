@@ -9,6 +9,10 @@ def import_data(request):
     if request.method == "POST" and request.FILES["json_file"]:
         json_file = request.FILES["json_file"]
         data = json.load(json_file)
+
+        if isinstance(data, dict):
+            data = [data]
+
         for item in data:
             user_data = UserData(
                 login=item["login"],
