@@ -4,4 +4,4 @@
 4 - Set up a Scrapy project
 5 - Maybe i wont need a Scrapy project
 6 - Set up a django project
-
+7 - Focus on getting multiple users info (at least 50 users)
