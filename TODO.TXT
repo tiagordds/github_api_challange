@@ -4,4 +4,7 @@
 4 - Set up a Scrapy project
 5 - Maybe i wont need a Scrapy project
 6 - Set up a django project
-7 - Focus on getting multiple users info (at least 50 users)
+7 - Focus on getting multiple users info
+8 - How to control wich users i get 
+9 - Trying to focus on using HTML responses for scraping
+10 - Can only scrape users based on ID
