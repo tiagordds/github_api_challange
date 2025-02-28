@@ -40,3 +40,6 @@ desktop.ini
 dist/
 build/
 *.egg-info/
+
+# Access Token
+access_token.py
