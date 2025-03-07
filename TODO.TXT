@@ -8,3 +8,6 @@
 8 - How to control wich users i get 
 9 - Trying to focus on using HTML responses for scraping
 10 - Can only scrape users based on ID
+11 - Create a database and don't repeat users, don't recreate the database
+12 - Maybe there is no need to write a JSON file, if the database already works
+13 - database does not create dupolicate usesr, code stops, need to fix the error
