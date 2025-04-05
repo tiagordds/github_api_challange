@@ -11,9 +11,9 @@ TOKEN = PERSONAL_ACCESS_TOKEN
 autorization = {"Autorization": f"token {TOKEN}"}
 
 
-def get_users(per_page=100, max_users=500):
+def get_users(since_id=0, per_page=100, max_users=500):
     users = []
-    since_id = 1
+    since_id = 15000
 
     while len(users) < max_users:
         url = "https://api.github.com/users"
@@ -36,13 +36,24 @@ def get_users(per_page=100, max_users=500):
 
 def save_to_database(users):
     for user in users:
-        print(user)
+        # print(user)
         UserInfo.objects.update_or_create(
-            id=user["id"],
+            id=user.get("id"),
             defaults={
-                "login": user["login"],
-                "html_url": user["html_url"],
-                "repos_url": user.get("repos_url", "N/A"),
-                "user_type": user.get("type", "Unknown"),
+                "login": user.get("login"),
+                "avatar_url": user.get("avatar_url", "Unknown"),
+                "html_url": user.get("html_url", "Unknown"),
+                "followers_url": user.get("followers_url", "Unknown"),
+                "following_url": user.get("following_url", "Unknown"),
+                "gist_url": user.get("gist_url", "Unknown"),
+                "starred_url": user.get("starred_url", "Unknown"),
+                "subscriptions_url": user.get("subscriptions_url", "Unknown"),
+                "organizations_url": user.get("organizations_url", "Unknown"),
+                "repos_url": user.get("repos_url", "Unknown"),
+                "event_url": user.get("event_url", "Unknown"),
+                "received_events_url": user.get("received_events_url", "Unknown"),
+                "user_type": user.get("user_type", "Unknown"),
+                "user_view_type": user.get("user_view_type", "Unknown"),
+                "site_admin": user.get("site_admin", False),
             },
         )
