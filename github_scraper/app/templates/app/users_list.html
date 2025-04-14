@@ -2,17 +2,67 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GitHub Users</title>
+    <title>GitHub Users (Simplified)</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            font-size: 16px;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            vertical-align: middle;
+            text-align: left;
+        }
+        th {
+            background-color: #f5f5f5;
+        }
+        img {
+            height: 50px;
+            border-radius: 6px;
+        }
+        a {
+            text-decoration: none;
+            color: #007bff;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
     <h1>GitHub Users</h1>
-    <ul>
-        {% for user in users %}
-            <li>
-                <a href="{{ user.html_url }}" target="_blank">{{ user.login }}</a>  {{ user.id }}
-            </li>
-        {% endfor %}
-    </ul>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Avatar</th>
+                <th>Login</th>
+                <th>ID</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td><img src="{{ user.avatar_url }}" alt="Avatar of {{ user.login }}"></td>
+                <td>
+                    <a href="{{ user.html_url }}" target="_blank">
+                        {{ user.login }}
+                    </a>
+                </td>
+                <td>{{ user.id }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="3">No users found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </body>
 </html>
