@@ -3,33 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>GitHub Users</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            padding: 20px;
-        }
-        table {
-            border-collapse: collapse;
-            width: 100%;
-            font-size: 14px;
-        }
-        th, td {
-            border: 1px solid #ccc;
-            padding: 6px 10px;
-            text-align: left;
-            vertical-align: top;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-        img {
-            height: 50px;
-        }
-        a {
-            word-break: break-all;
-            color: #0645AD;
-        }
-    </style>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/full_user_list.css' %}">
 </head>
 <body>
     <h1>GitHub Users</h1>
@@ -37,7 +12,7 @@
     <table>
         <thead>
             <tr>
-                <th>ID</th>
+                <th>Avatar</th>
                 <th>Avatar</th>
                 <th>Login</th>
                 <th>Profile</th>
@@ -58,8 +33,8 @@
         <tbody>
             {% for user in users %}
             <tr>
-                <td>{{ user.id }}</td>
                 <td><img src="{{ user.avatar_url }}" alt="avatar of {{ user.login }}"></td>
+                <td>{{ user.id }}</td>
                 <td>{{ user.login }}</td>
                 <td><a href="{{ user.html_url }}" target="_blank">{{ user.html_url }}</a></td>
                 <td><a href="{{ user.followers_url }}" target="_blank">{{ user.followers_url }}</a></td>

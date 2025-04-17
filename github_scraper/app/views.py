@@ -10,4 +10,4 @@ def user_list(request):
 
 def full_user_list(request):
     users = UserInfo.objects.all()
-    return render(request, "app/full_users_list.html", {"users": users})
+    return render(request, "app/full_user_list.html", {"users": users})
