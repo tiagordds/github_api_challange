@@ -13,7 +13,7 @@ autorization = {"Autorization": f"token {TOKEN}"}
 
 def get_users(since_id=0, per_page=100, max_users=500):
     users = []
-    since_id = 15000
+    since_id = 10000
 
     while len(users) < max_users:
         url = "https://api.github.com/users"

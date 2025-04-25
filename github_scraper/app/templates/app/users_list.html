@@ -8,7 +8,35 @@
 </head>
 <body>
     <h1>GitHub Users</h1>
+    <form method="get" style="margin-bottom: 20px;">
+      <label for="per_page">Users per page:</label>
+      <select name="per_page" id="per_page" onchange="this.form.submit()">
+          {% for value in per_page_options %}
+              <option value="{{ value }}" {% if value == per_page %}selected{% endif %}>{{ value }}</option>
+          {% endfor %}
+      </select>
+  </form>
+  <form method="get" style="margin-bottom: 20px;">
+    <label for="search">Search login:</label>
+    <input type="text" name="search" id="search" value="{{ search_query }}">
 
+    <label for="search_type">Match:</label>
+    <select name="search_type" id="search_type">
+        <option value="contains" {% if search_type == "contains" %}selected{% endif %}>Contains</option>
+        <option value="startswith" {% if search_type == "startswith" %}selected{% endif %}>Starts with</option>
+    </select>
+
+    <label for="per_page">Users per page:</label>
+    <select name="per_page" id="per_page">
+        {% for value in per_page_options %}
+            <option value="{{ value }}" {% if per_page == value %}selected{% endif %}>
+                {{ value }}
+            </option>
+        {% endfor %}
+    </select>
+
+    <button type="submit">Apply</button>
+</form>
     <table>
         <thead>
             <tr>
@@ -33,15 +61,15 @@
     </table>
 
     <div class="pagination">
-        {% if page_obj.has_previous %}
-            <a href="?page={{ page_obj.previous_page_number }}">&laquo; Previous</a>
-        {% endif %}
-
-        <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
-
-        {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}">Next &raquo;</a>
-        {% endif %}
-    </div>
+      {% if page_obj.has_previous %}
+          <a href="?page={{ page_obj.previous_page_number }}&per_page={{ per_page }}">&laquo; Previous</a>
+      {% endif %}
+  
+      <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+  
+      {% if page_obj.has_next %}
+          <a href="?page={{ page_obj.next_page_number }}&per_page={{ per_page }}">Next &raquo;</a>
+      {% endif %}
+  </div>
 </body>
 </html>
