@@ -1,3 +1,4 @@
+{% load url_utils %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -91,22 +92,19 @@
           {% endfor %}
       </tbody>
     </table>
+    {% if page_obj.has_other_pages %}
     <div class="pagination">
-      {% if page_obj.has_previous %}
-          <a href="?page={{ page_obj.previous_page_number }}&per_page={{ per_page }}">&laquo; Previous</a>
-      {% endif %}
-  
-      <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
-  
-      {% if page_obj.has_next %}
-          <a href="?page={{ page_obj.next_page_number }}&per_page={{ per_page }}">Next &raquo;</a>
-      {% endif %}
-  </div>
-      <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
-  
-      {% if page_obj.has_next %}
-          <a href="?page={{ page_obj.next_page_number }}">Next &raquo;</a>
-      {% endif %}
+        {% if page_obj.has_previous %}
+            <a href="?{% query_transform request page=page_obj.previous_page_number %}">Previous</a>
+        {% endif %}
+
+        <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+
+        {% if page_obj.has_next %}
+            <a href="?{% query_transform request page=page_obj.next_page_number %}">Next</a>
+        {% endif %}
+    </div>
+{% endif %}
   </div>
 </body>
 </html>
