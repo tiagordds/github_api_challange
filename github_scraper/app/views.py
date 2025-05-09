@@ -3,24 +3,37 @@ from django.shortcuts import render
 
 from .models import UserInfo
 
+PER_PAGE_OPTIONS = [10, 25, 50, 100]
 
-def user_list(request):
-    user_list = UserInfo.objects.all().order_by("id")
-    per_page = request.GET.get("per_page", 50)
-    per_page_options = [10, 25, 50, 75, 100]
-    per_page = int(per_page)
-    if per_page not in per_page_options:
-        per_page = 50
 
+def get_per_page(request):
+    per_page = int(request.GET.get("per_page", 50))
+    if per_page not in PER_PAGE_OPTIONS:
+        per_page = per_page
+    return per_page
+
+
+def get_user_search(queryset, request):
     user_search = request.GET.get("search", "")
-    search_type = request.GET.get("search_type", "contains")
+    search_type = request.GET.get("seartch_type", "contains")
+
     if user_search:
         if search_type == "startswith":
-            user_list = user_list.filter(login__istartswith=user_search)
+            queryset = queryset.filter(login__istartswith=user_search)
         elif search_type == "contains":
-            user_list = user_list.filter(login__icontains=user_search)
+            queryset = queryset.filter(login__icontains=user_search)
 
-    paginator = Paginator(user_list, per_page)
+    return queryset, user_search, search_type
+
+
+def user_list(request):
+    base_user_list = UserInfo.objects.all().order_by("id")
+    per_page = get_per_page(request)
+    filtered_user_list, user_search, search_type = get_user_search(
+        base_user_list, request
+    )
+
+    paginator = Paginator(filtered_user_list, per_page)
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
 
@@ -30,7 +43,7 @@ def user_list(request):
         {
             "page_obj": page_obj,
             "per_page": per_page,
-            "per_page_options": per_page_options,
+            "per_page_options": PER_PAGE_OPTIONS,
             "user_search": user_search,
             "search_type": search_type,
         },
@@ -38,22 +51,13 @@ def user_list(request):
 
 
 def full_user_list(request):
-    full_user_list = UserInfo.objects.all().order_by("id")
-    per_page = request.GET.get("per_page", 50)
-    per_page_options = [10, 25, 50, 75, 100]
-    per_page = int(per_page)
-    if per_page not in per_page_options:
-        per_page = 50
+    base_full_user_list = UserInfo.objects.all().order_by("id")
+    per_page = get_per_page(request)
+    filtered_full_user_list, user_search, search_type = get_user_search(
+        base_full_user_list, request
+    )
 
-    user_search = request.GET.get("search", "")
-    search_type = request.GET.get("search_type", "contains")
-    if user_search:
-        if search_type == "startswith":
-            full_user_list = full_user_list.filter(login__istartswith=user_search)
-        elif search_type == "contains":
-            full_user_list = full_user_list.filter(login__icontains=user_search)
-
-    paginator = Paginator(full_user_list, per_page)
+    paginator = Paginator(filtered_full_user_list, per_page)
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
 
@@ -63,7 +67,7 @@ def full_user_list(request):
         {
             "page_obj": page_obj,
             "per_page": per_page,
-            "per_page_options": per_page_options,
+            "per_page_options": PER_PAGE_OPTIONS,
             "user_search": user_search,
             "search_type": search_type,
         },

@@ -8,18 +8,17 @@ from .models import UserInfo
 
 TOKEN = PERSONAL_ACCESS_TOKEN
 
-autorization = {"Autorization": f"token {TOKEN}"}
+authorization = {"Authorization": f"token {TOKEN}"}
 
 
 def get_users(since_id=0, per_page=100, max_users=500):
     users = []
-    since_id = 10000
 
     while len(users) < max_users:
         url = "https://api.github.com/users"
         since_per_page = {"since": since_id, "per_page": per_page}
 
-        response = requests.get(url, headers=autorization, params=since_per_page)
+        response = requests.get(url, headers=authorization, params=since_per_page)
 
         if response.status_code != 200:
             print("Error:", response.json())
@@ -36,7 +35,6 @@ def get_users(since_id=0, per_page=100, max_users=500):
 
 def save_to_database(users):
     for user in users:
-        # print(user)
         UserInfo.objects.update_or_create(
             id=user.get("id"),
             defaults={
